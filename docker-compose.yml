@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis
+    restart: always
+  postapp:
+    restart: always
+    build:
+      context: ..
+    ports:
+      - 8000:8000
+
+
+

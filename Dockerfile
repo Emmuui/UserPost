@@ -1,10 +1,13 @@
 FROM python:3.10
 
-WORKDIR /app
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-COPY req.txt /app/req.txt
+WORKDIR app
+
+COPY req.txt req.txt
 
 RUN pip install --upgrade pip
 RUN pip install -r req.txt
 
-COPY .. /app
+COPY . .

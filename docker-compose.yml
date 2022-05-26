@@ -9,9 +9,10 @@ services:
     restart: always
     build: .
     container_name: web_django_container
-    command: python manage.py runserver 0.0.0.0:8000
+    command: bash entrypoint.sh
     volumes:
-      - ./app/:/usr/src/app/
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
     ports:
       - '8000:8000'
     env_file:
@@ -28,6 +29,18 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
+  nginx:
+    container_name: nginx_container
+    build: ./nginx
+    restart: always
+    ports:
+      - '8084:80'
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    depends_on:
+    - web
 volumes:
   postgres_data:
-
+  static_volume:
+  media_volume:
